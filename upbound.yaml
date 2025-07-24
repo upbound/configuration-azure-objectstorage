@@ -1,0 +1,18 @@
+apiVersion: meta.dev.upbound.io/v1alpha1
+kind: Project
+metadata:
+  name: configuration-azure-objectstorage
+spec:
+  dependsOn:
+  - function: xpkg.upbound.io/crossplane-contrib/function-auto-ready
+    version: '>=v0.0.0'
+  - provider: xpkg.upbound.io/upbound/provider-family-azure
+    version: v1
+  - provider: xpkg.upbound.io/upbound/provider-azure-storage
+    version: v1
+  description: Creates Azure Storage Containers that can be used to backup Upbound Spaces.
+  license: Apache-2.0
+  maintainer: Upbound <support@upbound.io>
+  readme: Creates Azure Storage Containers that can be used to backup Upbound Spaces.
+  repository: xpkg.upbound.io/upboundcare/configuration-azure-objectstorage
+  source: github.com/upbound/configuration-azure-objectstorage

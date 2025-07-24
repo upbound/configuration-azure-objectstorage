@@ -1,0 +1,9 @@
+apiVersion: azure.platform.upbound.io/v1
+kind: XStorageContainer
+metadata:
+  name: ref-azure-storagecontainer-existing-rg
+spec:
+  parameters:
+    providerConfigName: default
+    region: eastus
+    resourceGroup: existing-rg

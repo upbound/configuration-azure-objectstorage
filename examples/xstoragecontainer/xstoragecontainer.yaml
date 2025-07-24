@@ -1,0 +1,8 @@
+apiVersion: azure.platform.upbound.io/v1
+kind: XStorageContainer
+metadata:
+  name: ref-azure-storagecontainer
+spec:
+  parameters:
+    providerConfigName: default
+    region: eastus
