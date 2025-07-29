@@ -21,6 +21,7 @@ _metadata = lambda name: str -> any {
         annotations = {
             "krm.kcl.dev/composition-resource-name" = name
         }
+        name = name
     }
 }
 # Helper function to add common spec fields
@@ -37,6 +38,7 @@ _items = [
     if not params.resourceGroup:
         azurev1beta1.ResourceGroup {
             metadata = _metadata("${oxr.metadata.name}-rg")
+            metadata.name = "${oxr.metadata.name}-rg"
             spec = _add_common_spec_fields(azurev1beta1.AzureUpboundIoV1beta1ResourceGroupSpec {
                 forProvider = {
                     location = params.region

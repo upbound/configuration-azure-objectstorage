@@ -53,6 +53,7 @@ _test1 = metav1alpha1.CompositionTest {
             metadata.annotations = {
                 "crossplane.io/composition-resource-name" = "ref-azure-storagecontainer-rg"
             }
+            metadata.name = "ref-azure-storagecontainer-rg"
             spec.forProvider: {
                 location: "eastus"
             }
@@ -62,6 +63,7 @@ _test1 = metav1alpha1.CompositionTest {
             metadata.annotations = {
                 "crossplane.io/composition-resource-name" = "refazurestoragecontaine"
             }
+            metadata.name = "refazurestoragecontaine"
             spec.forProvider: {
                 accountKind: "BlobStorage"
                 accountReplicationType: "LRS"
@@ -75,6 +77,7 @@ _test1 = metav1alpha1.CompositionTest {
             metadata.annotations = {
                 "crossplane.io/composition-resource-name" = "ref-azure-storagecontainer-container"
             }
+            metadata.name = "ref-azure-storagecontainer-container"
             spec.forProvider: {
                 containerAccessType: "private"
                 storageAccountNameSelector: {
@@ -104,6 +107,7 @@ _test2 = metav1alpha1.CompositionTest {
             metadata.annotations = {
                 "crossplane.io/composition-resource-name" = "refazurestoragecontaine"
             }
+            metadata.name = "refazurestoragecontaine"
             spec.forProvider: {
                 accountKind: "BlobStorage"
                 accountReplicationType: "LRS"
@@ -117,6 +121,7 @@ _test2 = metav1alpha1.CompositionTest {
             metadata.annotations = {
                 "crossplane.io/composition-resource-name" = "ref-azure-storagecontainer-existing-rg-container"
             }
+            metadata.name = "ref-azure-storagecontainer-existing-rg-container"
             spec.forProvider: {
                 containerAccessType: "private"
                 storageAccountNameSelector: {
