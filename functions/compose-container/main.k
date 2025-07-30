@@ -3,6 +3,7 @@ import models.io.upbound.azure.v1beta1 as azurev1beta1
 import models.io.upbound.azure.storage.v1beta1 as storagev1beta1
 import models.io.upbound.azure.storage.v1beta2 as storagev1beta2
 import regex
+
 #import models.k8s.apimachinery.pkg.apis.meta.v1 as metav1
 # observed composite resource
 # oxr = option("params").oxr
@@ -20,6 +21,7 @@ _metadata = lambda name: str -> any {
         annotations = {
             "krm.kcl.dev/composition-resource-name" = name
         }
+        name = name
     }
 }
 # Helper function to add common spec fields
@@ -29,9 +31,8 @@ _add_common_spec_fields = lambda spec: any -> any {
         providerConfigRef.name = params.providerConfigName
     }
 }
-
 # An Azure Storage account can only be lowercase alphanumeric, max 24 chars
-_account = regex.replace("${oxr.metadata.name}-account".lower(),"[^\w]", "")[0:23]
+_account = regex.replace("${oxr.metadata.name}-account".lower(), "[^\w]", "")[0:23:]
 
 _items = [
     if not params.resourceGroup:
@@ -43,7 +44,6 @@ _items = [
                 }
             })
         }
-
     storagev1beta2.Account {
         metadata = _metadata(_account)
         spec = _add_common_spec_fields({
@@ -52,8 +52,7 @@ _items = [
                 accountReplicationType = "LRS"
                 accountTier = "Standard"
                 location = params.region
-                resourceGroupName =  params.resourceGroup if params.resourceGroup else "${oxr.metadata.name}-rg"
-      
+                resourceGroupName = params.resourceGroup if params.resourceGroup else "${oxr.metadata.name}-rg"
             }
         })
     }
@@ -61,11 +60,11 @@ _items = [
         metadata = _metadata("${oxr.metadata.name}-container")
         spec = _add_common_spec_fields({
             forProvider = {
-                containerAccessType =  "private"
+                containerAccessType = "private"
                 storageAccountNameSelector = {
                     matchControllerRef = True
-                } 
-        }
+                }
+            }
         })
     }
 ]
