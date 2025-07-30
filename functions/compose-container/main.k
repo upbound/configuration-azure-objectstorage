@@ -38,7 +38,6 @@ _items = [
     if not params.resourceGroup:
         azurev1beta1.ResourceGroup {
             metadata = _metadata("${oxr.metadata.name}-rg")
-            metadata.name = "${oxr.metadata.name}-rg"
             spec = _add_common_spec_fields(azurev1beta1.AzureUpboundIoV1beta1ResourceGroupSpec {
                 forProvider = {
                     location = params.region
