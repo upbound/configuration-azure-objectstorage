@@ -1,3 +1,4 @@
+---
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
@@ -8,9 +9,9 @@ spec:
     kind: XStorageContainer
   mode: Pipeline
   pipeline:
-  - functionRef:
-      name: upboundcare-configuration-azure-objectstoragecompose-container
-    step: compose-container
-  - functionRef:
-      name: crossplane-contrib-function-auto-ready
-    step: crossplane-contrib-function-auto-ready
+    - functionRef:
+        name: upbound-configuration-azure-objectstoragecompose-container
+      step: compose-container
+    - functionRef:
+        name: crossplane-contrib-function-auto-ready
+      step: crossplane-contrib-function-auto-ready
