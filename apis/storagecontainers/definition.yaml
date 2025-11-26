@@ -1,0 +1,57 @@
+---
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: storagecontainers.azure.platform.upbound.io
+spec:
+  scope: Namespaced
+  group: azure.platform.upbound.io
+  names:
+    categories:
+      - crossplane
+    kind: StorageContainer
+    plural: storagecontainers
+  versions:
+    - name: v1
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          description: StorageContainer defines a secure, managed storage space inside an Azure Storage Account where files, logs, and other application data can be stored.
+          properties:
+            spec:
+              description: StorageContainerSpec defines the desired state of StorageContainer.
+              properties:
+                parameters:
+                  properties:
+                    managementPolicies:
+                      description: ManagementPolicies for the Storage resources. Defaults to ["*"] which includes all operations (Create, Observe, Update, Delete). To orphan resources on deletion, use ["Create", "Observe", "Update"].
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                          - "*"
+                          - Create
+                          - Observe
+                          - Update
+                          - Delete
+                      default: ["*"]
+                    providerConfigName:
+                      description: Crossplane ProviderConfig to use for provisioning this resources
+                      type: string
+                      default: default
+                    region:
+                      default: eastus
+                      description: Azure Region
+                      type: string
+                    resourceGroup:
+                      description: Existing Azure ResourceGroup. If empty, a ResourceGroup will be created.
+                      type: string
+                  type: object
+              type: object
+            status:
+              description: StorageContainerStatus defines the observed state of StorageContainer.
+              type: object
+          required:
+            - spec
+          type: object
+      served: true

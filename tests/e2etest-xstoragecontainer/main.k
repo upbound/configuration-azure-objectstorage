@@ -1,17 +1,17 @@
 import models.io.upbound.platform.azure.v1 as platformazurev1
-import models.io.upbound.azure.v1beta1 as azurev1beta1
+import models.io.upbound.azurem.v1beta1 as azurev1beta1
 import models.io.upbound.dev.meta.v1alpha1 as metav1alpha1
 
 _items = [
     metav1alpha1.E2ETest {
-        metadata.name = "e2etest-xstoragecontainer"
+        metadata.name = "e2etest-storagecontainer"
         spec = {
             crossplane.autoUpgrade.channel = "Rapid"
             defaultConditions = [
                 "Ready"
             ]
             manifests = [
-                platformazurev1.XStorageContainer {
+                platformazurev1.StorageContainer {
                     metadata.name = "uptest-storage-container"
                     spec.parameters = {
                         region = "eastus"

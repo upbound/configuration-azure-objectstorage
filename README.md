@@ -6,14 +6,14 @@ This repository contains an Upbound Configuration for Microsoft Azure Storage Co
 
 The core components of this Upbound Configuration include:
 
-- **CompositeResourceDefinition (XRD):** Defines the `XStorageContainer` API structure
+- **CompositeResourceDefinition (XRD):** Defines the `StorageContainer` API structure
 - **Composition:** Configures the Functions Pipeline for storage container provisioning  
 - **Embedded Function:** Composition logic in [`functions/compose-container/main.k`](functions/compose-container/main.k)
 
 In this configuration, the API contains:
 
-- **a custom `XStorageContainer` resource type**, Defined in [`apis/xstoragecontainers/definition.yaml`](apis/xstoragecontainers/definition.yaml)
-- **Composition:** Configured in [`apis/xstoragecontainers/composition.yaml`](apis/xstoragecontainers/composition.yaml)
+- **a custom `StorageContainer` resource type**, Defined in [`apis/StorageContainers/definition.yaml`](apis/StorageContainers/definition.yaml)
+- **Composition:** Configured in [`apis/StorageContainers/composition.yaml`](apis/StorageContainers/composition.yaml)
 - **Embedded Function:** Composition logic in [`functions/compose-container/main.k`](functions/compose-container/main.k)
 
 The configuration creates Azure Storage Containers with configurable parameters including region, resource group, and provider configuration.

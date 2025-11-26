@@ -1,7 +1,6 @@
 import models.io.upbound.platform.azure.v1 as platformazurev1
-import models.io.upbound.azure.v1beta1 as azurev1beta1
-import models.io.upbound.azure.storage.v1beta1 as storagev1beta1
-import models.io.upbound.azure.storage.v1beta2 as storagev1beta2
+import models.io.upbound.azurem.v1beta1 as azurev1beta1
+import models.io.upbound.azurem.storage.v1beta1 as storagev1beta1
 
 import models.io.upbound.dev.meta.v1alpha1 as metav1alpha1
 
@@ -18,9 +17,9 @@ _stripDefaults = lambda obj: any -> any {
 
 _specCreateResourceGroup = metav1alpha1.CompositionTest {
     spec = {
-        compositionPath: "apis/xstoragecontainers/composition.yaml"
-        xrPath: "examples/xstoragecontainer/xstoragecontainer.yaml"
-        xrdPath: "apis/xstoragecontainers/definition.yaml"
+        compositionPath: "apis/storagecontainers/composition.yaml"
+        xrPath: "examples/storagecontainer/storagecontainer.yaml"
+        xrdPath: "apis/storagecontainers/definition.yaml"
         timeoutSeconds: 120
         validate: False
     }
@@ -28,19 +27,19 @@ _specCreateResourceGroup = metav1alpha1.CompositionTest {
 
 _specExistingResourceGroup = metav1alpha1.CompositionTest {
     spec = {
-        compositionPath: "apis/xstoragecontainers/composition.yaml"
-        xrPath: "examples/xstoragecontainer/xstoragecontainer-existing-rg.yaml"
-        xrdPath: "apis/xstoragecontainers/definition.yaml"
+        compositionPath: "apis/storagecontainers/composition.yaml"
+        xrPath: "examples/storagecontainer/storagecontainer-existing-rg.yaml"
+        xrdPath: "apis/storagecontainers/definition.yaml"
         timeoutSeconds: 120
         validate: False
     }
 }
 
 _test1 = metav1alpha1.CompositionTest {
-    metadata.name = "test-xstoragecontainer-create-rg"
+    metadata.name = "test-storagecontainer-create-rg"
     **_specCreateResourceGroup
     spec.assertResources = [
-        platformazurev1.XStorageContainer {
+        platformazurev1.StorageContainer {
             metadata.name: "ref-azure-storagecontainer"
             spec: {
                 parameters: {
@@ -57,9 +56,12 @@ _test1 = metav1alpha1.CompositionTest {
             spec.forProvider: {
                 location: "eastus"
             }
-            spec.providerConfigRef.name = "default"
+            spec.providerConfigRef = {
+                kind = "ProviderConfig"
+                name = "default"
+            }
         }
-        storagev1beta2.Account {
+        storagev1beta1.Account {
             metadata.annotations = {
                 "crossplane.io/composition-resource-name" = "refazurestoragecontaine"
             }
@@ -71,7 +73,10 @@ _test1 = metav1alpha1.CompositionTest {
                 location: "eastus"
                 resourceGroupName: "ref-azure-storagecontainer-rg"
             }
-            spec.providerConfigRef.name = "default"
+            spec.providerConfigRef = {
+                kind = "ProviderConfig"
+                name = "default"
+            }
         }
         storagev1beta1.Container {
             metadata.annotations = {
@@ -84,16 +89,19 @@ _test1 = metav1alpha1.CompositionTest {
                     matchControllerRef: True
                 }
             }
-            spec.providerConfigRef.name = "default"
+            spec.providerConfigRef = {
+                kind = "ProviderConfig"
+                name = "default"
+            }
         }
     ]
 }
 
 _test2 = metav1alpha1.CompositionTest {
-    metadata.name = "test-xstoragecontainer-existing-rg"
+    metadata.name = "test-storagecontainer-existing-rg"
     **_specExistingResourceGroup
     spec.assertResources = [
-        platformazurev1.XStorageContainer {
+        platformazurev1.StorageContainer {
             metadata.name: "ref-azure-storagecontainer-existing-rg"
             spec: {
                 parameters: {
@@ -103,7 +111,7 @@ _test2 = metav1alpha1.CompositionTest {
                 }
             }
         }
-        storagev1beta2.Account {
+        storagev1beta1.Account {
             metadata.annotations = {
                 "crossplane.io/composition-resource-name" = "refazurestoragecontaine"
             }
@@ -115,7 +123,10 @@ _test2 = metav1alpha1.CompositionTest {
                 location: "eastus"
                 resourceGroupName: "existing-rg"
             }
-            spec.providerConfigRef.name = "default"
+            spec.providerConfigRef = {
+                kind = "ProviderConfig"
+                name = "default"
+            }
         }
         storagev1beta1.Container {
             metadata.annotations = {
@@ -128,7 +139,10 @@ _test2 = metav1alpha1.CompositionTest {
                     matchControllerRef: True
                 }
             }
-            spec.providerConfigRef.name = "default"
+            spec.providerConfigRef = {
+                kind = "ProviderConfig"
+                name = "default"
+            }
         }
     ]
 }
