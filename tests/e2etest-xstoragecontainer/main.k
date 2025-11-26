@@ -4,7 +4,7 @@ import models.io.upbound.dev.meta.v1alpha1 as metav1alpha1
 
 _items = [
     metav1alpha1.E2ETest {
-        metadata.name = "e2etest-storagecontainer"
+        metadata.name = "storage-container"
         spec = {
             # Configure Crossplane for the test environment
             crossplane = {
@@ -17,7 +17,7 @@ _items = [
             manifests = [
                 platformazurev1.StorageContainer {
                     metadata = {
-                        name = "uptest-storage-container"
+                        name = "uptest-storage"
                         namespace = "default"
                     }
                     spec.parameters = {
