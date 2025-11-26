@@ -24,7 +24,10 @@ _items = [
             ]
             extraResources = [
                 azurev1beta1.ProviderConfig {
-                    metadata.name = "default"
+                    metadata = {
+                        name = "default"
+                        namespace = "default"
+                    }
                     spec = {
                         credentials = {
                             source = "Upbound"
