@@ -1,13 +1,12 @@
 import models.io.upbound.platform.azure.v1 as platformazurev1
-import models.io.upbound.azure.v1beta1 as azurev1beta1
-import models.io.upbound.azure.storage.v1beta1 as storagev1beta1
-import models.io.upbound.azure.storage.v1beta2 as storagev1beta2
+import models.io.upbound.azurem.v1beta1 as azurev1beta1
+import models.io.upbound.azurem.storage.v1beta1 as storagev1beta1
 import regex
 
 #import models.k8s.apimachinery.pkg.apis.meta.v1 as metav1
 # observed composite resource
 # oxr = option("params").oxr
-oxr = platformazurev1.XStorageContainer {**option("params").oxr}
+oxr = platformazurev1.StorageContainer {**option("params").oxr}
 params = oxr.spec.parameters
 # observed composed resources
 _ocds = option("params").ocds
@@ -27,8 +26,11 @@ _metadata = lambda name: str -> any {
 # Helper function to add common spec fields
 _add_common_spec_fields = lambda spec: any -> any {
     spec | {
-        deletionPolicy = params.deletionPolicy
-        providerConfigRef.name = params.providerConfigName
+        managementPolicies = params.managementPolicies or ["*"]
+        providerConfigRef = {
+            kind = "ProviderConfig"
+            name = params.providerConfigName
+        }
     }
 }
 # An Azure Storage account can only be lowercase alphanumeric, max 24 chars
@@ -38,13 +40,13 @@ _items = [
     if not params.resourceGroup:
         azurev1beta1.ResourceGroup {
             metadata = _metadata("${oxr.metadata.name}-rg")
-            spec = _add_common_spec_fields(azurev1beta1.AzureUpboundIoV1beta1ResourceGroupSpec {
+            spec = _add_common_spec_fields(azurev1beta1.AzuremUpboundIoV1beta1ResourceGroupSpec {
                 forProvider = {
                     location = params.region
                 }
             })
         }
-    storagev1beta2.Account {
+    storagev1beta1.Account {
         metadata = _metadata(_account)
         spec = _add_common_spec_fields({
             forProvider = {

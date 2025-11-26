@@ -1,7 +1,8 @@
 apiVersion: azure.platform.upbound.io/v1
-kind: XStorageContainer
+kind: StorageContainer
 metadata:
   name: ref-azure-storagecontainer
+  namespace: default
 spec:
   parameters:
     providerConfigName: default
