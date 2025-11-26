@@ -19,6 +19,8 @@ _items = [
                     metadata.name = "uptest-storage-container"
                     spec.parameters = {
                         region = "eastus"
+                        managementPolicies = ["*"]
+                        providerConfigName = "default"
                     }
                 }
             ]
