@@ -6,7 +6,11 @@ _items = [
     metav1alpha1.E2ETest {
         metadata.name = "e2etest-storagecontainer"
         spec = {
-            crossplane.autoUpgrade.channel = "Rapid"
+            # Configure Crossplane for the test environment
+            crossplane = {
+                version = "2.0.2-up.5"
+                autoUpgrade.channel = "Rapid"
+            }
             defaultConditions = [
                 "Ready"
             ]
