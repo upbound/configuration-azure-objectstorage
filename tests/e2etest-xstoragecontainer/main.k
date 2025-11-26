@@ -16,7 +16,10 @@ _items = [
             ]
             manifests = [
                 platformazurev1.StorageContainer {
-                    metadata.name = "uptest-storage-container"
+                    metadata = {
+                        name = "uptest-storage-container"
+                        namespace = "default"
+                    }
                     spec.parameters = {
                         region = "eastus"
                         managementPolicies = ["*"]
